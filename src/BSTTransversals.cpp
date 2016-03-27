@@ -15,21 +15,58 @@ it and understand how testing works .
 */
 
 #include <stdio.h>
-
 struct node{
 	struct node * left;
 	int data;
 	struct node *right;
 };
-
-
-void inorder(struct node *root, int *arr){
-	
+void rinorder(struct node *root, int *arr, int *k);
+void rpreorder(struct node *root, int *arr, int *k);
+void rpostorder(struct node *root, int *arr, int *k);
+void inorder(struct node *root, int *arr)
+{
+	int k = 0;
+	rinorder(root, arr, &k);
+}
+void rinorder(struct node *root, int *arr, int *k){
+	if (arr != NULL)
+	{
+		if (root != NULL)
+		{
+			rinorder(root->left, arr, k);
+			arr[(*k)++] = root->data;
+			rinorder(root->right, arr, k);
+		}
+	}
 }
 void preorder(struct node *root, int *arr){
-	
+	int k = 0;
+	rpreorder(root, arr, &k);
+}
+void rpreorder(struct node *root, int *arr, int *k){
+	if (arr != NULL)
+	{
+		if (root != NULL)
+		{
+			arr[(*k)++] = root->data;
+			rpreorder(root->left, arr, k);
+			rpreorder(root->right, arr, k);
+
+		}
+	}
 }
 void postorder(struct node *root, int *arr){
-	
+	int k = 0;
+	rpostorder(root, arr, &k);
 }
-
+void rpostorder(struct node *root, int *arr, int *k){
+	if (arr != NULL)
+	{
+		if (root != NULL)
+		{
+			rpostorder(root->left, arr, k);
+			rpostorder(root->right, arr, k);
+			arr[(*k)++] = root->data;
+		}
+	}
+}
