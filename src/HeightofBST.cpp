@@ -33,24 +33,48 @@ Return -1 for invalid inputs
 */
 #include <stdlib.h>
 #include <stdio.h>
-
 struct node{
 	struct node * left;
 	int data;
 	struct node *right;
 };
-
-
+int get_left_subtree_sum_rec(struct node *root);
+int get_right_subtree_sum_rec(struct node *root);
 int get_height(struct node *root){
-
-	return 0;
+	if (root == NULL)
+		return 0;
+	int left_height = get_height(root->left);
+	int right_height = get_height(root->right);
+	if (left_height >right_height)
+		return(left_height + 1);
+	else
+		return(right_height + 1);
 }
-
 int get_left_subtree_sum(struct node *root){
-	return 0;
+	if (root == NULL)
+		return 0;
+	root = root->left;
+	return get_left_subtree_sum_rec(root);
 }
-
+int get_left_subtree_sum_rec(struct node *root){
+	if (root == NULL)
+		return 0;
+	if (root != NULL)
+	{
+		return (get_left_subtree_sum_rec(root->left) + root->data + get_left_subtree_sum_rec(root->right));
+	}
+}
 int get_right_subtree_sum(struct node *root){
-	return 0;
+	if (root == NULL)
+		return 0;
+	root = root->right;
+	return get_right_subtree_sum_rec(root);
 }
-
+int get_right_subtree_sum_rec(struct node *root){
+	if (root == NULL)
+		return 0;
+	if (root != NULL)
+	{
+		return (get_right_subtree_sum_rec(root->left) + root->data + get_right_subtree_sum_rec(root->right));
+	}
+}
